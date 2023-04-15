@@ -25,6 +25,14 @@ runs:
 on:
   issues:
     types: [opened, reopened]
+    
+
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print a message
+        run: echo "Hello, world!"
 
 steps:
   - name: Install dependencies
