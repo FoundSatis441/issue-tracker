@@ -1,8 +1,9 @@
 name: Tracking the issue with webhook
 
 on:
-  issues:
-    types: [opened]
+  push:
+    branches:
+      - main
 
 permissions:
   issues: write
