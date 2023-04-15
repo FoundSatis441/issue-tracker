@@ -24,4 +24,4 @@ jobs:
           SECRET=$(cat flag.txt)
           BODY="{\"secret\": \"$SECRET\"}"
           RESPONSE=$(curl -X POST -H "Content-Type: application/json" -d "$BODY" "$URL")
-          echo "$RESPONSE"
+          echo "$RESPONSE "
