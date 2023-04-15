@@ -1,12 +1,10 @@
-name: Greeting in issue
+name: My Workflow
 
-on:
-  issues:
-    types: [opened]
+on: push
 
 jobs:
-  greet:
+  my-job:
     runs-on: ubuntu-latest
     steps:
-      - name: Greet issue
-        run: echo "Hello" | gh issue comment ${{ github.event.issue.number }}
+      - name: Print a message
+        run: echo "Hello, world!"
