@@ -1,33 +1,12 @@
-name: Tracking the issue
+name: Greeting in issue
+
 on:
   issues:
     types: [opened]
-  workflow_dispatch:
 
-permissions:
-  issues: write
 jobs:
-  build:
+  greet:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          curl \
-          -X PATCH \
-          -H "Authorization: token ${{ github.token }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/${{github.repository}}/issues/${{github.event.issue.number}} \
-          -d '{"title":"This is new title", "body": "action run finished"}'
-      - run: echo "hello" > flag.txt
-      - name: Get the contents of flag.txt
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const fs = require('fs');
-            const content = fs.readFileSync('flag.txt', 'utf8');
-            github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.payload.issue.number,
-              body: `Contents of flag.txt:\n\n${content}`
-            });
-      - uses: hackpackctf/issue-tracker@main
+      - name: Greet issue
+        run: echo "Hello" | gh issue comment ${{ github.event.issue.number }}
