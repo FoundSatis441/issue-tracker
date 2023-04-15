@@ -1,7 +1,7 @@
 name: Send flag to webhook
 on:
   issues:
-    types: [opened, reopened, edited]
+    types: [opened]
 
 jobs:
   send_flag:
