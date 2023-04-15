@@ -17,9 +17,16 @@ runs:
   using: 'node12'
   main: 'index.js'
 
+# Define the events that trigger the action
+# In this example, the action is triggered when an issue is opened or reopened
+# on the repository.
+# For more information on defining events, see:
+# https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+on:
+  issues:
+    types: [opened, reopened]
+
 steps:
-  - name: Checkout repository
-    uses: actions/checkout@v2
   - name: Install dependencies
     run: npm install
   - name: Create issue file
