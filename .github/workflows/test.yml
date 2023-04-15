@@ -1,0 +1,21 @@
+name: My Workflow
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add message to issue
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const payload = {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.issue.number,
+              body: 'Hello, world!'
+            };
+            return github.issues.createComment(payload);
